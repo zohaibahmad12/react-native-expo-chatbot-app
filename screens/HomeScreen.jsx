@@ -1,10 +1,26 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native';
+import Lottie from "lottie-react-native";
+import { useNavigation } from '@react-navigation/native';
 const { width, height } = Dimensions.get("window");
 const HomeScreen = () => {
+    const navigation = useNavigation()
     return (
         <View style={styles.container}>
-          <Text>Hello</Text>
+            <View style={styles.lottieContainer}>
+                <Lottie style={{ width: width * 0.9, height: height * 0.4 }}
+                    source={require("../assets/Animations/main.json")}
+                    autoPlay
+                    loop
+                />
+                <Text style={styles.mainheading}>CHATBOT</Text>
+                <Text style={styles.subHeading}>Made to be Helpful</Text>
+            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('ChatbotScreen')}>
+                <View style={styles.button}>
+                    <Text style={styles.text}>Start Chat</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 };

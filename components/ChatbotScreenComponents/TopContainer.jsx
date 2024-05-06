@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 const { width, height } = Dimensions.get("window");
 const TopContainer = () => {
+    const navigation=useNavigation()
     return (
         <View style={styles.header}>
-            <TouchableOpacity style={styles.goBackButton} onPress={() => { }}>
+            <TouchableOpacity style={styles.goBackButton} onPress={() => {navigation.goBack() }}>
                 <Ionicons name="arrow-back" size={24} color="black" />
             </TouchableOpacity>
             <View style={styles.userInfo}>
