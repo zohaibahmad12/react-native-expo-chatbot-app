@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, FlatList, StyleSheet, Dimensions, } from 'react-native';
+import { View, Text, FlatList, StyleSheet} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Lottie from "lottie-react-native";
 const ChatList = ({ messages, loading }) => {

@@ -9,14 +9,10 @@ const TopContainer = () => {
                 <Ionicons name="arrow-back" size={24} color="black" />
             </TouchableOpacity>
             <View style={styles.userInfo}>
-                {/* <Image style={styles.profileImage}
-                    source={
-                        route.params.user.profilePictureUrl
-                            ? { uri: route.params.user.profilePictureUrl }
-                            : require("../assets/UserProfile/profilePicture.webp")
-                    }
-                /> */}
-                <Text style={styles.userName}>Chatbot AI</Text>
+                <Image style={styles.profileImage}
+                    source={require("../../assets/chatbot.png") }
+                />
+                <Text style={styles.userName}>CHATBOT AI</Text>
             </View>
         </View>
     );
