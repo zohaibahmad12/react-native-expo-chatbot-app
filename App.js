@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import ChatbotScreen from './screens/ChatbotScreen';
+import MyAppNavigation from './AppNavigation/MyAppNavigation';
 export default function App() {
   return (
-   <ChatbotScreen />
+   <MyAppNavigation />
   );
 }
 
