@@ -7,6 +7,7 @@ import getCurrentTime from '../utils/CurrentTime';
 import generateUniqueId from '../utils/UniqueIdentity';
 const ChatbotScreen = () => {
     const [messages, setMessages] = useState([])
+    const [loading,setLoading]=useState(false)
     const addMessage = (newMessage) => {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
     }
@@ -22,8 +23,8 @@ const ChatbotScreen = () => {
     return (
         <View style={styles.container}>
             <TopContainer />
-            <ChatList messages={messages} />
-            <ChatInput addMessage={addMessage}/>
+            <ChatList messages={messages} loading={loading} />
+            <ChatInput addMessage={addMessage} loading={loading} setLoading={setLoading}/>
         </View>
     );
 };

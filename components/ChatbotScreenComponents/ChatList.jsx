@@ -1,13 +1,8 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
-import {
-  View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Image,
-  Dimensions, ActivityIndicator
-} from 'react-native';
+import React, { memo } from 'react';
+import { View, Text, FlatList, StyleSheet, Dimensions, } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
-const { width, height } = Dimensions.get("window");
-const ChatList = ({ messages }) => {
-
+import Lottie from "lottie-react-native";
+const ChatList = ({ messages, loading }) => {
   const renderMessage = ({ item }) => {
     return (
       <View style={[styles.messageContainer, item.isUser ? styles.userMessage : styles.otherMessage]}>
@@ -17,17 +12,26 @@ const ChatList = ({ messages }) => {
       </View>
     );
   };
-console.log('chat rendered')
-console.log(messages);
+  console.log('chat rendered')
   return (
-    <FlatList
-      inverted={true}
-      data={[...messages].reverse()}
-      renderItem={renderMessage}
-      keyExtractor={(item) => item.uid}
-      contentContainerStyle={styles.chatContainer}
+    <>
+      <FlatList
+        inverted={true}
+        data={[...messages].reverse()}
+        renderItem={renderMessage}
+        keyExtractor={(item) => item.uid}
+        contentContainerStyle={styles.chatContainer}
+      />
+      {
+        loading &&
+        <Lottie style={{ width: 100, height: 100 }}
+          source={require("../../assets/Animations/loading.json")}
+          autoPlay
+          loop
+        />
+      }
 
-    />
+    </>
   );
 };
 
@@ -72,7 +76,6 @@ const styles = StyleSheet.create({
   },
   otherDate: {
     color: 'grey',
-  }
+  },
 });
-
 export default memo(ChatList);

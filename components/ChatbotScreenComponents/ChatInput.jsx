@@ -1,50 +1,54 @@
-import React, { useState} from 'react';
-import {View, TextInput, TouchableOpacity, StyleSheet, Dimensions,} from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, TouchableOpacity, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 const { width, height } = Dimensions.get("window");
 import getCurrentTime from '../../utils/CurrentTime';
 import generateUniqueId from '../../utils/UniqueIdentity';
-import * as GoogleGenerativeAI from '@google/generative-ai'
-const ChatInput= ({addMessage}) => {
-    const API_KEY='AIzaSyCBav1Ajj66OMmoeZYfLvvRXftQ7juK8Jw'
+import * as GoogleGenerativeAI from '@google/generative-ai';
+const ChatInput = ({ addMessage, loading, setLoading }) => {
+    const API_KEY = 'AIzaSyCBav1Ajj66OMmoeZYfLvvRXftQ7juK8Jw'
     const [text, setText] = useState('');
-    const sendMessage=async()=>{
-        const prompt=text
-        const newMessage={
+
+    const sendMessage = async () => {
+        setLoading(true)
+        const prompt = text
+        const newMessage = {
             text,
-            isUser:true,
-            time:getCurrentTime(),
-            uid:generateUniqueId()
+            isUser: true,
+            time: getCurrentTime(),
+            uid: generateUniqueId()
         }
         addMessage(newMessage)
         setText('')
 
-        const genAI=new GoogleGenerativeAI.GoogleGenerativeAI(API_KEY)
-        const model=genAI.getGenerativeModel({model:'gemini-pro'})
-        const result=await model.generateContent(prompt)
-        const response=result.response
-        const chatbotText=response.text()
-        const chatbotMessage={
-            text:chatbotText,
-            isUser:false,
-            time:getCurrentTime(),
-            uid:generateUniqueId()
+        const genAI = new GoogleGenerativeAI.GoogleGenerativeAI(API_KEY)
+        const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+        const result = await model.generateContent(prompt)
+        const response = result.response
+        const chatbotText = response.text()
+        const chatbotMessage = {
+            text: chatbotText,
+            isUser: false,
+            time: getCurrentTime(),
+            uid: generateUniqueId()
         }
         addMessage(chatbotMessage)
+        setLoading(false)
     }
     return (
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.textInput}
-                    value={text}
-                    onChangeText={(value) => setText(value)}
-                    placeholder="Type a message..."
-                    multiline
-                />
-                <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-                    <Ionicons name="send" size={24} color="white" />
-                </TouchableOpacity>
-            </View>
+        <View style={styles.inputContainer}>
+            <TextInput
+                style={styles.textInput}
+                value={text}
+                onChangeText={(value) => setText(value)}
+                placeholder="Type a message..."
+                multiline
+            />
+            <TouchableOpacity style={[ styles.sendButton, loading && styles.buttonDisabled, (text.trim()=='') && styles.buttonDisabled]} onPress={sendMessage} disabled={loading}>
+                <Ionicons name="send" size={24} color="white" />
+            </TouchableOpacity>
+
+        </View>
     );
 };
 
@@ -70,12 +74,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
     },
+    buttonDisabled: {
+        backgroundColor: 'lightgrey',
+     
+    },
     activityIndicatorContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: "#f6f6f6",
-        height: height * 0.6
+
     }
 });
 
